@@ -1,5 +1,7 @@
 import * as  React from 'react'
 import styles from './ViewForm.module.scss';
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 import { useParams } from "react-router-dom";
 
@@ -7,6 +9,9 @@ import ITEquipmentService from "../services/ITEquipmentService";
 import { IITEquipment } from "../models/IITEquipments";
 
 const ViewForm = () => {
+    // Add ref at top of your component
+    const formRef = React.useRef<HTMLDivElement>(null);
+    const actionBarRef = React.useRef<HTMLDivElement>(null);
 
     const { id } = useParams();
     const [data, setData] = React.useState<IITEquipment | null>(null);
@@ -42,9 +47,63 @@ const ViewForm = () => {
         return <div>Record not found.</div>;
     }
 
+
+
+    // Add print function
+    const handlePrint = async (): Promise<void> => {
+  if (!formRef.current) return;
+
+  try {
+    // ✅ Hide via ref
+    if (actionBarRef.current) actionBarRef.current.style.display = "none";
+
+    const canvas = await html2canvas(formRef.current, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: "#ffffff",
+      logging: false,
+    });
+
+    // ✅ Restore via ref
+    if (actionBarRef.current) actionBarRef.current.style.display = "";
+
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: "a4",
+    });
+
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    const imgWidth = pageWidth;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    let heightLeft = imgHeight;
+    let position = 0;
+
+    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+
+    while (heightLeft > 0) {
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
+
+    pdf.save(`ITEquipmentRequest_${data?.ITEquipmentRequestID || data?.ID}.pdf`);
+
+  } catch (error) {
+    if (actionBarRef.current) actionBarRef.current.style.display = "";
+    console.error("Error generating PDF:", error);
+  }
+};
+
     return (
-        <div className={styles.container}>
-            <div className={styles.section}>
+        <div className={styles.container} ref={formRef}>
+            <div className={styles.firstSection}>
                 <h2>Employee Information</h2>
 
                 <div className={styles.grid}>
@@ -114,6 +173,7 @@ const ViewForm = () => {
                     <div className={styles.field}>
                         <label>Signature : </label>
                         <img
+                            className={styles.sigImage}
                             src={data?.EmployeeSignature?.replace(/^"|"$/g, "").trim()}
                             alt="Signature"
                         />
@@ -163,8 +223,13 @@ const ViewForm = () => {
                 </div>
             </div>
 
-            <div className={styles.actionBar}>
-                <button className={styles.printBtn}>Print</button>
+            <div className={styles.actionBar} ref={actionBarRef}>
+                <button
+                    className={styles.printBtn}
+                    onClick={handlePrint}
+                >
+                    🖨️ Download PDF
+                </button>
             </div>
         </div>
     )

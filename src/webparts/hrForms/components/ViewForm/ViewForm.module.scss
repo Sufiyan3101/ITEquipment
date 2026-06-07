@@ -4,6 +4,19 @@
   box-sizing: border-box;
 }
 
+.firstSection {
+  background: white;
+  padding: 20px 0px 0px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+
+  h2 {
+    margin-bottom: 20px;
+    color: #005ea6;
+    font-size: 1.2rem;
+  }
+}
+
 .section {
   background: white;
   padding: 20px;
@@ -54,6 +67,11 @@
   max-height: 100px;
   width: 100%;
   height: auto;
+}
+
+.sigImage{
+  width: 130px;
+  height: 100px;
 }
 
 .rejected {
