@@ -9,10 +9,19 @@
           "manifest": "./src/webparts/hrForms/HrFormsWebPart.manifest.json"
         }
       ]
+    },
+    "change-request-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/changeRequest/ChangeRequestWebPart.js",
+          "manifest": "./src/webparts/changeRequest/ChangeRequestWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
   "localizedResources": {
-    "HrFormsWebPartStrings": "lib/webparts/hrForms/loc/{locale}.js"
+    "HrFormsWebPartStrings": "lib/webparts/hrForms/loc/{locale}.js",
+    "ChangeRequestWebPartStrings": "lib/webparts/changeRequest/loc/{locale}.js"
   }
 }

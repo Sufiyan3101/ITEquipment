@@ -1,15 +1,15 @@
 import * as React from "react";
 import styles from "./Dashboard.module.scss";
-import ITEquipmentService from "../services/ITEquipmentService";
-import { IITEquipment } from "../models/IITEquipments";
+import ChangeRequestService from "../services/ChangeRequestService";
+import { IChangeRequest } from "../models/IChangeRequest";
 import { useNavigate } from "react-router-dom";
 
 const ITEMS_PER_PAGE = 10;
 
 const Dashboard = () => {
-  const [ITEquipments, setITEquipments] = React.useState<IITEquipment[]>([]);
+  const [requests, setRequests] = React.useState<IChangeRequest[]>([]);
   const [searchText, setSearchText] = React.useState<string>("");
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [currentPage, setCurrentPage] = React.useState<number>(1);
 
   const navigate = useNavigate();
@@ -17,9 +17,8 @@ const Dashboard = () => {
   const loadData = async (): Promise<void> => {
     try {
       setLoading(true);
-
-      const data = await ITEquipmentService.getITEquipmentData();
-      setITEquipments(data);
+      const data = await ChangeRequestService.getAllRequests();
+      setRequests(data || []);
     } catch (error) {
       console.error("Error loading data:", error);
     } finally {
@@ -36,21 +35,29 @@ const Dashboard = () => {
     setCurrentPage(1);
   }, [searchText]);
 
-  const filteredITEquipments = ITEquipments.filter((item) => {
+  // Filter data based on search
+  const filteredRequests = React.useMemo(() => {
     const search = searchText.toLowerCase().trim();
-    return (
-      item.ITEquipmentRequestID?.toString().toLowerCase().indexOf(search) > -1 ||
-      item.ApprovalStatus?.toLowerCase().indexOf(search) > -1
-    );
-  });
+    if (!search) return requests;
+    
+    return requests.filter((item) => {
+      return (
+        (item.Change_x0020_Request_x0020_ID?.toLowerCase().includes(search) || false) ||
+        (item.User_x0020_Requirement?.toLowerCase().includes(search) || false) ||
+        (item.User_x0020_Requirement_x0020_Pri?.toLowerCase().includes(search) || false) ||
+        (item.System?.toLowerCase().includes(search) || false) ||
+        (item.ApprovalStatus?.toLowerCase().includes(search) || false)
+      );
+    });
+  }, [requests, searchText]);
 
   // Pagination calculations
-  const totalPages = Math.ceil(filteredITEquipments.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(filteredRequests.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
-  const paginatedItems = filteredITEquipments.slice(startIndex, endIndex);
+  const paginatedItems = filteredRequests.slice(startIndex, endIndex);
 
-  // Generate page numbers
+  // Generate page numbers to display (like screenshot: 1 2 3 4 ... >>)
   const getPageNumbers = (): (number | string)[] => {
     const pages: (number | string)[] = [];
 
@@ -69,17 +76,36 @@ const Dashboard = () => {
     return pages;
   };
 
+  const getStatusClass = (status: string | undefined): string => {
+    switch(status) {
+      case "Request Completed": return styles.statusCompleted;
+      case "Pending with HOD": return styles.statusPendingHOD;
+      case "Pending with HODIT": return styles.statusPendingIT;
+      default: return styles.statusDefault;
+    }
+  };
+
+  const getPriorityClass = (priority: string | undefined): string => {
+    switch(priority) {
+      case "High": return styles.priorityHigh;
+      case "Medium": return styles.priorityMedium;
+      default: return styles.priorityLow;
+    }
+  };
+
   return (
     <div className={styles.dashboard}>
-
       <div className={styles.header}>
-        <div className={styles.title}>IT EQUIPMENT DASHBOARD</div>
+        <div className={styles.title}>CHANGE REQUEST DASHBOARD</div>
+        <div className={styles.logo}>
+          <img src={require("../../assets/AlubafHeaderLogo.png")} alt="logo" />
+        </div>
       </div>
 
       <div className={styles.toolbar}>
         <input
           type="text"
-          placeholder="Search by Request ID or Approval Status..."
+          placeholder="Search by Request ID, Requirement, Priority, System & Status..."
           className={styles.searchBox}
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
@@ -96,36 +122,57 @@ const Dashboard = () => {
         <table className={styles.table}>
           <thead>
             <tr>
-              <th>Memo ID</th>
+              <th>Request ID</th>
               <th>Title</th>
-              <th>Full Name</th>
-              <th>Classification</th>
-              <th>Memo Note</th>
-              <th>Date</th>
+              <th>First Name</th>
+              <th>Staff No</th>
+              <th>Department</th>
+              <th>System</th>
+              <th>Requirement</th>
+              <th>Priority</th>
               <th>Status</th>
               <th>View</th>
             </tr>
           </thead>
           <tbody>
-            {paginatedItems.map((item) => (
-              <tr key={item.ITEquipmentRequestID} className={styles.tableRow}>
-                <td>{item.ITEquipmentRequestID}</td>
-                <td>{item.FirstName}</td>
-                <td>{item.StaffNo}</td>
-                <td>{item.Department}</td>
-                <td>{item.Date}</td>
-                <td>{item.RequestType}</td>
-                <td>{item.ApprovalStatus}</td>
-                <td>
-                  <button
-                    className={styles.viewBtn}
-                    onClick={() => navigate(`/view-form/${item.ID}`)}
-                  >
-                    View
-                  </button>
-                </td>
+            {paginatedItems.length === 0 ? (
+              <tr>
+                <td colSpan={10} className={styles.noData}>No records found</td>
               </tr>
-            ))}
+            ) : (
+              paginatedItems.map((item) => (
+                <tr key={item.ID} className={styles.tableRow}>
+                  <td>{item.Change_x0020_Request_x0020_ID || "N/A"}</td>
+                  <td>{item.Title || "N/A"}</td>
+                  <td>{item.First_x0020_Name || "N/A"}</td>
+                  <td>{item.Staff_x0020_No || "N/A"}</td>
+                  <td>{item.Department || "N/A"}</td>
+                  <td>{item.System || "N/A"}</td>
+                  <td className={styles.requirementCell}>
+                    {(item.User_x0020_Requirement || "N/A").substring(0, 35)}
+                    {(item.User_x0020_Requirement?.length || 0) > 35 ? "..." : ""}
+                  </td>
+                  <td>
+                    <span className={`${styles.priorityBadge} ${getPriorityClass(item.User_x0020_Requirement_x0020_Pri)}`}>
+                      {item.User_x0020_Requirement_x0020_Pri || "N/A"}
+                    </span>
+                  </td>
+                  <td>
+                    <span className={`${styles.statusBadge} ${getStatusClass(item.ApprovalStatus)}`}>
+                      {item.ApprovalStatus || "N/A"}
+                    </span>
+                  </td>
+                  <td>
+                    <button
+                      className={styles.viewBtn}
+                      onClick={() => navigate(`/view-form/${item.ID}`)}
+                    >
+                      View
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
@@ -192,7 +239,7 @@ const Dashboard = () => {
 
       {/* Record count info */}
       <div className={styles.pageInfo}>
-        Showing {startIndex + 1}–{Math.min(endIndex, filteredITEquipments.length)} of {filteredITEquipments.length} records
+        Showing {startIndex + 1}–{Math.min(endIndex, filteredRequests.length)} of {filteredRequests.length} records
       </div>
 
     </div>

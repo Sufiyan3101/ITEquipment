@@ -39,6 +39,8 @@
     "@microsoft/sp-build-web": "1.20.2",
     "@microsoft/sp-module-interfaces": "1.20.2",
     "@rushstack/eslint-config": "4.0.1",
+    "@types/html2canvas": "^1.0.0",
+    "@types/jspdf": "^2.0.0",
     "@types/react": "17.0.45",
     "@types/react-dom": "17.0.17",
     "@types/react-signature-canvas": "^1.0.7",
