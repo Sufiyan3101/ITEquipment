@@ -1,0 +1,115 @@
+.container {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.section {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+
+  h2 {
+    margin-bottom: 20px;
+    color: #005ea6;
+    font-size: 1.2rem;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  gap: 6px;
+
+  label {
+    font-weight: 600;
+    color: #444;
+  }
+
+  span,
+  a {
+    color: #222;
+    word-break: break-word;
+  }
+}
+
+.fieldFull {
+  grid-column: span 2;
+  display: flex;
+  gap: 6px;
+
+  label {
+    font-weight: 600;
+  }
+}
+
+.signature {
+  max-width: 200px;
+  width: 100%;
+  height: auto;
+}
+
+.rejected {
+  color: #d13438;
+  font-weight: 600;
+}
+
+.actionBar {
+  display: flex;
+  justify-content: center;
+}
+
+.printBtn {
+  background: #005ea6;
+  color: white;
+  border: none;
+  padding: 12px 40px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+  .container {
+    padding: 12px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fieldFull {
+    grid-column: span 1;
+  }
+
+  .section {
+    padding: 15px;
+  }
+}
+
+
+
+@media (max-width: 480px) {
+  .section h2 {
+    font-size: 1rem;
+  }
+
+  .field label {
+    font-size: 0.9rem;
+  }
+
+  .field span,
+  .field a {
+    font-size: 0.85rem;
+  }
+
+  .printBtn {
+    width: 100%;
+  }
+}

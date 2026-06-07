@@ -1,0 +1,18 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "hr-forms-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/hrForms/HrFormsWebPart.js",
+          "manifest": "./src/webparts/hrForms/HrFormsWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {},
+  "localizedResources": {
+    "HrFormsWebPartStrings": "lib/webparts/hrForms/loc/{locale}.js"
+  }
+}

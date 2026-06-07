@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "alubaf-hr-forms-client-side-solution",
+    "id": "839ca202-8d41-4404-8587-76c28b3292ca",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.20.0"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "alubaf-hr-forms description"
+      },
+      "longDescription": {
+        "default": "alubaf-hr-forms description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "alubaf-hr-forms Feature",
+        "description": "The feature that activates elements of the alubaf-hr-forms solution.",
+        "id": "0f8c696a-8e58-4787-a003-abc3a96a1fa1",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/alubaf-hr-forms.sppkg"
+  }
+}
