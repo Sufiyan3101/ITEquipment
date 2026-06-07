@@ -44,6 +44,7 @@ export default class ITEquipmentService {
           "RequestType",
           "ApprovalStatus",
           "EmployeeSignature",
+          "Attachments",
           "Reason",
           "HODApprovarName/Id",
           "HODApprovarName/Title",
@@ -65,7 +66,16 @@ export default class ITEquipmentService {
           "ITStaffComment"
         ).expand("HODApprovarName", "HODITApprovarName", "StaffMembers", "ITStaffApprovarName")();
 
-      return item as IITEquipment;
+        const attachments = await getSP().web.lists
+      .getByTitle("ITEquipmentRequest")
+      .items.getById(id)
+      .attachmentFiles();
+
+    console.log("Attachments fetched:", attachments);
+    console.log("Attachments count:", attachments?.length);
+
+    return { ...item, Attachments: attachments } as IITEquipment;
+
     } catch (error) {
       console.error(error);
 

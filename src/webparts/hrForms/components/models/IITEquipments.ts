@@ -1,3 +1,5 @@
+import { IAttachmentInfo } from "@pnp/sp/attachments";
+
 export interface IITEquipment {
   ID: number;
   ITEquipmentRequestID: string;
@@ -9,6 +11,7 @@ export interface IITEquipment {
   RequestType: string;
   ApprovalStatus: string;
   EmployeeSignature: string;
+  Attachments: IAttachmentInfo[];
   Reason: string;
   HODApprovarName: IPerson;
   HODDate: Date;

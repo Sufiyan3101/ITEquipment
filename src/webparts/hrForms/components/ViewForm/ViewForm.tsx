@@ -50,55 +50,72 @@ const ViewForm = () => {
                 <div className={styles.grid}>
                     <div className={styles.field}>
                         <label>Title : </label>
-                        <span>{data.Title || "N/A"}</span>
+                        <span>{data?.Title || "N/A"}</span>
                     </div>
 
                     <div className={styles.field}>
                         <label>Employee Name : </label>
-                        <span>{data.FirstName || "N/A"}</span>
+                        <span>{data?.FirstName || "N/A"}</span>
                     </div>
 
                     <div className={styles.field}>
                         <label>Staff No : </label>
-                        <span>{data.StaffNo || "N/A"}</span>
+                        <span>{data?.StaffNo || "N/A"}</span>
                     </div>
 
                     <div className={styles.field}>
                         <label>Department : </label>
-                        <span>{data.Department || "N/A"}</span>
+                        <span>{data?.Department || "N/A"}</span>
                     </div>
 
                     <div className={styles.field}>
                         <label>Date : </label>
-                        <span>{data.Date || "N/A"}</span>
+                        <span>{data?.Date || "N/A"}</span>
                     </div>
 
                     <div className={styles.field}>
                         <label>Status : </label>
-                        <span>{data.ApprovalStatus || "N/A"}</span>
+                        <span>{data?.ApprovalStatus || "N/A"}</span>
                     </div>
 
                     <div className={styles.field}>
                         <label>Request Type : </label>
-                        <span>{data.RequestType || "N/A"}</span>
+                        <span>{data?.RequestType || "N/A"}</span>
                     </div>
 
                     <div className={styles.field}>
                         <label>Reason : </label>
-                        <span>{data.Reason || "N/A"}</span>
+                        <span>{data?.Reason || "N/A"}</span>
                     </div>
 
-                    {/* <div className={styles.field}>
-        <label>Attachment : </label>
-        <span>{data}</span>
-      </div> */}
+                    <div className={styles.field}>
+                        <label>Attachments : </label>
+                        <div>
+                            {data?.Attachments && data.Attachments.length > 0 ? (
+                                <ul className={styles.attachmentList}>
+                                    {data.Attachments.map((file) => (
+                                        <li key={file.FileName}>
+                                            <a
+                                                href={file.ServerRelativeUrl}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                            >
+                                                📎 {file.FileName}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <span>N/A</span>
+                            )}
+                        </div>
+                    </div>
 
                     <div className={styles.field}>
                         <label>Signature : </label>
                         <img
-                            src={data.EmployeeSignature}
+                            src={data?.EmployeeSignature?.replace(/^"|"$/g, "").trim()}
                             alt="Signature"
-                            className={styles.signature}
                         />
                     </div>
                 </div>
@@ -106,62 +123,48 @@ const ViewForm = () => {
 
             <div className={styles.section}>
                 <h2>Approved By Head of Department</h2>
-
                 <div className={styles.grid}>
                     <div className={styles.field}>
                         <label>Name : </label>
                         <span>{data.HODApprovarName?.Title || "N/A"}</span>
                     </div>
-
                     <div className={styles.field}>
-                        <label>Date</label>
+                        <label>Date : </label>
                         <span>{data.HODDate || "N/A"}</span>
                     </div>
                 </div>
-
             </div>
-
 
             <div className={styles.section}>
                 <h2>Approved By Head of IT Department</h2>
-
                 <div className={styles.grid}>
                     <div className={styles.field}>
-                        <label>Name</label>
+                        <label>Name : </label>
                         <span>{data.HODITApprovarName?.Title || "N/A"}</span>
                     </div>
-
                     <div className={styles.field}>
-                        <label>Date</label>
+                        <label>Date : </label>
                         <span>{data.HODITDate || "N/A"}</span>
                     </div>
                 </div>
-
             </div>
 
-
             <div className={styles.section}>
-                <h2>Approved By ITStaff Member</h2>
-
+                <h2>Approved By IT Staff Member</h2>
                 <div className={styles.grid}>
                     <div className={styles.field}>
-                        <label>Name</label>
+                        <label>Name : </label>
                         <span>{data.ITStaffApprovarName?.Title || "N/A"}</span>
                     </div>
-
                     <div className={styles.field}>
-                        <label>Date</label>
+                        <label>Date : </label>
                         <span>{data.ITStaffDate || "N/A"}</span>
                     </div>
-
                 </div>
-
             </div>
 
             <div className={styles.actionBar}>
-                <button className={styles.printBtn}>
-                    Print
-                </button>
+                <button className={styles.printBtn}>Print</button>
             </div>
         </div>
     )
