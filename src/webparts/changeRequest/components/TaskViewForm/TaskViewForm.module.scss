@@ -1,0 +1,579 @@
+// .container {
+//   width: 100%;
+//   padding: 20px;
+//   box-sizing: border-box;
+// }
+
+// .loading, .notFound {
+//   text-align: center;
+//   padding: 60px;
+//   font-size: 18px;
+//   color: #666;
+// }
+
+// .formCard {
+//   background: white;
+//   border-radius: 12px;
+//   padding: 25px;
+//   max-width: 900px;
+//   margin: 0 auto;
+//   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+// }
+
+// .formTitle {
+//   color: #005ea6;
+//   font-size: 1.5rem;
+//   margin-bottom: 25px;
+//   padding-bottom: 15px;
+//   border-bottom: 2px solid #005ea6;
+// }
+
+// .section {
+//   margin-bottom: 25px;
+//   padding-bottom: 20px;
+//   border-bottom: 1px solid #eee;
+  
+//   h3 {
+//     color: #333;
+//     margin-bottom: 15px;
+//     font-size: 1.1rem;
+//   }
+  
+//   &:last-child {
+//     border-bottom: none;
+//     margin-bottom: 0;
+//   }
+// }
+
+// .grid {
+//   display: grid;
+//   grid-template-columns: repeat(2, 1fr);
+//   gap: 15px;
+// }
+
+// .field {
+//   display: flex;
+//   flex-wrap: wrap;
+//   gap: 8px;
+  
+//   label {
+//     font-weight: 600;
+//     color: #555;
+//     min-width: 100px;
+//   }
+  
+//   span {
+//     color: #222;
+//     flex: 1;
+//   }
+// }
+
+// .fieldFull {
+//   display: flex;
+//   flex-wrap: wrap;
+//   gap: 8px;
+//   margin-bottom: 10px;
+  
+//   label {
+//     font-weight: 600;
+//     color: #555;
+//     min-width: 100px;
+//   }
+  
+//   span {
+//     color: #222;
+//     flex: 1;
+//   }
+// }
+
+// .statusValue {
+//   background: #005ea6;
+//   color: white;
+//   padding: 4px 12px;
+//   border-radius: 20px;
+//   display: inline-block;
+//   font-size: 12px;
+// }
+
+// .signature {
+//   max-width: 200px;
+//   max-height: 80px;
+//   border: 1px solid #ddd;
+//   padding: 5px;
+//   background: #f9f9f9;
+//   border-radius: 4px;
+// }
+
+// .approvalSection {
+//   background: #f9f9f9;
+//   padding: 20px;
+//   border-radius: 8px;
+//   margin-top: 10px;
+// }
+
+// .formGroup {
+//   margin-bottom: 15px;
+  
+//   label {
+//     display: block;
+//     font-weight: 600;
+//     margin-bottom: 8px;
+//     color: #333;
+//   }
+// }
+
+// .required {
+//   color: #d13438;
+//   margin-left: 4px;
+// }
+
+// .textarea {
+//   width: 100%;
+//   padding: 10px;
+//   border: 1px solid #ccc;
+//   border-radius: 6px;
+//   font-size: 14px;
+//   font-family: inherit;
+//   resize: vertical;
+//   box-sizing: border-box;
+  
+//   &:focus {
+//     outline: none;
+//     border-color: #005ea6;
+//   }
+// }
+
+// .select {
+//   width: 100%;
+//   padding: 10px;
+//   border: 1px solid #ccc;
+//   border-radius: 6px;
+//   font-size: 14px;
+//   background: white;
+  
+//   &:focus {
+//     outline: none;
+//     border-color: #005ea6;
+//   }
+// }
+
+// .actionButtons {
+//   display: flex;
+//   gap: 15px;
+//   margin-top: 15px;
+// }
+
+// .approveBtn, .rejectBtn, .submitBtn, .closeBtn {
+//   padding: 10px 25px;
+//   border: none;
+//   border-radius: 6px;
+//   cursor: pointer;
+//   font-size: 14px;
+//   font-weight: 500;
+// }
+
+// .approveBtn {
+//   background: #107c10;
+//   color: white;
+//   &:hover { background: #0a5c0a; }
+// }
+
+// .rejectBtn {
+//   background: #d13438;
+//   color: white;
+//   &:hover { background: #b12a2e; }
+// }
+
+// .submitBtn {
+//   background: #005ea6;
+//   color: white;
+//   width: 100%;
+//   &:hover { background: #00457a; }
+// }
+
+// .closeBtn {
+//   background: #6c757d;
+//   color: white;
+//   width: 100%;
+//   &:hover { background: #5a6268; }
+// }
+
+// .infoBox {
+//   background: #e9ecef;
+//   padding: 10px;
+//   border-radius: 6px;
+//   margin: 15px 0;
+//   text-align: center;
+//   color: #005ea6;
+//   font-weight: 500;
+// }
+
+// @media (max-width: 768px) {
+//   .container { padding: 12px; }
+//   .formCard { padding: 15px; }
+//   .grid { grid-template-columns: 1fr; }
+//   .field label, .fieldFull label { min-width: 80px; }
+//   .actionButtons { flex-direction: column; }
+//   .approveBtn, .rejectBtn { width: 100%; text-align: center; }
+// }
+
+
+.container {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.loading, .notFound {
+  text-align: center;
+  padding: 60px;
+  font-size: 18px;
+  color: #666;
+}
+
+.formCard {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  max-width: 900px;
+  margin: 0 auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.formTitle {
+  color: #005ea6;
+  font-size: 1.5rem;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #005ea6;
+}
+
+.section {
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  
+  h3 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+  }
+  
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.field {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  
+  label {
+    font-weight: 600;
+    color: #555;
+    min-width: 100px;
+  }
+  
+  span {
+    color: #222;
+    flex: 1;
+  }
+}
+
+.fieldFull {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+  
+  label {
+    font-weight: 600;
+    color: #555;
+    min-width: 100px;
+  }
+  
+  span {
+    color: #222;
+    flex: 1;
+  }
+}
+
+.statusValue {
+  background: #005ea6;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  display: inline-block;
+  font-size: 12px;
+}
+
+.signature {
+  max-width: 200px;
+  max-height: 80px;
+  border: 1px solid #ddd;
+  padding: 5px;
+  background: #f9f9f9;
+  border-radius: 4px;
+}
+
+.approvalSection {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.formGroup {
+  margin-bottom: 15px;
+  
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+  }
+}
+
+.required {
+  color: #d13438;
+  margin-left: 4px;
+}
+
+/* Input field styles */
+.input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+  
+  &:focus {
+    outline: none;
+    border-color: #005ea6;
+  }
+}
+
+.textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  box-sizing: border-box;
+  
+  &:focus {
+    outline: none;
+    border-color: #005ea6;
+  }
+}
+
+.select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+  
+  &:focus {
+    outline: none;
+    border-color: #005ea6;
+  }
+}
+
+/* People Picker Styles */
+.searching {
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+  padding: 8px;
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+
+.searchResults {
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  background: white;
+  margin-top: -1px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.searchResultItem {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s;
+  
+  &:hover {
+    background-color: #f0f0f0;
+  }
+}
+
+.selected {
+  background-color: #e6f3ff;
+  border-left: 3px solid #005ea6;
+}
+
+.staffName {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.staffEmail {
+  font-size: 12px;
+  color: #666;
+  margin-top: 2px;
+}
+
+/* Button Styles */
+.actionButtons {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.approveBtn {
+  background: #107c10;
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  flex: 1;
+  
+  &:hover {
+    background: #0a5c0a;
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.rejectBtn {
+  background: #d13438;
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  flex: 1;
+  
+  &:hover {
+    background: #b12a2e;
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.submitBtn {
+  background: #005ea6;
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  width: 100%;
+  
+  &:hover {
+    background: #00457a;
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.closeBtn {
+  background: #6c757d;
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  width: 100%;
+  
+  &:hover {
+    background: #5a6268;
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.infoBox {
+  background: #e9ecef;
+  padding: 10px;
+  border-radius: 6px;
+  margin: 15px 0;
+  text-align: center;
+  color: #005ea6;
+  font-weight: 500;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .container {
+    padding: 12px;
+  }
+  
+  .formCard {
+    padding: 15px;
+  }
+  
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .field label, .fieldFull label {
+    min-width: 80px;
+  }
+  
+  .actionButtons {
+    flex-direction: column;
+  }
+  
+  .approveBtn, .rejectBtn {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .formTitle {
+    font-size: 1.2rem;
+  }
+  
+  .section h3 {
+    font-size: 1rem;
+  }
+}
