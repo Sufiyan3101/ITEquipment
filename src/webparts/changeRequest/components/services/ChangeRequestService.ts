@@ -1,4 +1,177 @@
+// // import { getSP } from "./spConfig";
+// // import { IChangeRequest } from "../models/IChangeRequest";
 
+// // export default class ChangeRequestService {
+// //   private static listName: string = "Change Request Form";
+
+// //   public static async getAllRequests(): Promise<IChangeRequest[]> {
+// //     try {
+// //       const items = await getSP()
+// //         .web.lists.getByTitle(this.listName)
+// //         .items.select(
+// //           "ID",
+// //           "Change_x0020_Request_x0020_ID",
+// //           "Title",
+// //           "First_x0020_Name",
+// //           "Staff_x0020_No",
+// //           "Department",
+// //           "System",
+// //           "User_x0020_Requirement",
+// //           "User_x0020_Requirement_x0020_Pri",
+// //           "ApprovalStatus",
+// //           "Date",
+// //           "Submission_x0020_Date"
+// //         )
+// //         .orderBy("ID", false)();
+      
+// //       return items as IChangeRequest[];
+// //     } catch (error) {
+// //       console.error("Error fetching change requests:", error);
+// //       return [];
+// //     }
+// //   }
+
+// //   public static async getRequestById(id: number): Promise<IChangeRequest | null> {
+// //     try {
+// //       const item = await getSP()
+// //         .web.lists.getByTitle(this.listName)
+// //         .items.getById(id)
+// //         .select(
+// //           "ID",
+// //           "Title",
+// //           "First_x0020_Name",
+// //           "Last_x0020_Name",
+// //           "Staff_x0020_No",
+// //           "Department",
+// //           "System",
+// //           "User_x0020_Requirement",
+// //           "User_x0020_Requirement_x0020_Pri",
+// //           "User_x0020_Requirements",
+// //           "IT_x0020_DEPARTMENT_x0020_ANALYSIS",
+// //           "IT_x0020_DEPARTMENT_x0020_TESTING_x002f_REPORT",
+// //           "USER_x0020_ACCEPTANCE",
+// //           "Date",
+// //           "Submission_x0020_Date",
+// //           "Change_x0020_Request_x0020_ID",
+// //           "ApprovalStatus",
+// //           "Employee_x0020_Signature",
+// //           "HODComment",
+// //           "HODITComment",
+// //           "ITStaffComment",
+// //           "HODDate",
+// //           "HODITDate",
+// //           "ITStaffDate",
+// //           "HODApprovarName/Id",
+// //           "HODApprovarName/Title",
+// //           "HODApprovarName/EMail",
+// //           "HODITApprovarName/Id",
+// //           "HODITApprovarName/Title",
+// //           "HODITApprovarName/EMail",
+// //           "ITStaffApprovarName/Id",
+// //           "ITStaffApprovarName/Title",
+// //           "ITStaffApprovarName/EMail",
+// //           "StaffMembers/Id",
+// //           "StaffMembers/Title",
+// //           "StaffMembers/EMail",
+// //           "SubmitterName/Id",
+// //           "SubmitterName/Title",
+// //           "SubmitterName/EMail"
+// //         )
+// //         .expand(
+// //           "HODApprovarName", 
+// //           "HODITApprovarName", 
+// //           "ITStaffApprovarName", 
+// //           "StaffMembers",
+// //           "SubmitterName"
+// //         )();
+
+// //       const attachments = await getSP()
+// //         .web.lists.getByTitle(this.listName)
+// //         .items.getById(id)
+// //         .attachmentFiles();
+
+// //       return { ...item, Attachments: attachments } as IChangeRequest;
+// //     } catch (error) {
+// //       console.error("Error fetching request by ID:", error);
+// //       return null;
+// //     }
+// //   }
+
+// //   public static async createRequest(data: Partial<IChangeRequest>): Promise<number> {
+// //     try {
+// //       const item = await getSP()
+// //         .web.lists.getByTitle(this.listName)
+// //         .items.add({
+// //           Title: data.Title || "Mr",
+// //           First_x0020_Name: data.First_x0020_Name,
+// //           Staff_x0020_No: data.Staff_x0020_No,
+// //           Department: data.Department,
+// //           System: data.System,
+// //           User_x0020_Requirement: data.User_x0020_Requirement,
+// //           User_x0020_Requirement_x0020_Pri: data.User_x0020_Requirement_x0020_Pri,
+// //           User_x0020_Requirements: data.User_x0020_Requirements,
+// //           Date: data.Date,
+// //           Submission_x0020_Date: new Date().toISOString(),
+// //           Employee_x0020_Signature: data.Employee_x0020_Signature,
+// //           ApprovalStatus: "Pending with HOD"
+// //         });
+      
+// //       const newId = item.data.Id;
+      
+// //       const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+// //       const changeRequestId = `${dateStr}-CRQ-${newId.toString().padStart(3, "0")}`;
+      
+// //       await getSP()
+// //         .web.lists.getByTitle(this.listName)
+// //         .items.getById(newId)
+// //         .update({
+// //           Change_x0020_Request_x0020_ID: changeRequestId
+// //         });
+      
+// //       return newId;
+// //     } catch (error) {
+// //       console.error("Error creating request:", error);
+// //       throw error;
+// //     }
+// //   }
+
+// //   public static async updateRequest(id: number, data: Partial<IChangeRequest>): Promise<void> {
+// //     try {
+// //       await getSP()
+// //         .web.lists.getByTitle(this.listName)
+// //         .items.getById(id)
+// //         .update(data);
+// //     } catch (error) {
+// //       console.error("Error updating request:", error);
+// //       throw error;
+// //     }
+// //   }
+
+// //   public static async addAttachment(itemId: number, file: File): Promise<void> {
+// //     try {
+// //       await getSP()
+// //         .web.lists.getByTitle(this.listName)
+// //         .items.getById(itemId)
+// //         .attachmentFiles.add(file.name, file);
+// //     } catch (error) {
+// //       console.error("Error adding attachment:", error);
+// //       throw error;
+// //     }
+// //   }
+
+// //   public static async deleteAttachment(itemId: number, fileName: string): Promise<void> {
+// //     try {
+// //       await getSP()
+// //         .web.lists.getByTitle(this.listName)
+// //         .items.getById(itemId)
+// //         .attachmentFiles.getByName(fileName)
+// //         .delete();
+// //     } catch (error) {
+// //       console.error("Error deleting attachment:", error);
+// //       throw error;
+// //     }
+// //   }
+// // }
 
 // import { getSP, isSPInitialized } from "./spConfig";
 // import { IChangeRequest } from "../models/IChangeRequest";
@@ -299,7 +472,6 @@
 // }
 
 
-
 import { getSP, isSPInitialized } from "./spConfig";
 import { IChangeRequest } from "../models/IChangeRequest";
 
@@ -396,8 +568,6 @@ export default class ChangeRequestService {
           "ITStaffApprovarName"
         )();
       
-      console.log("Item fetched:", item ? "Yes" : "No");
-      
       const attachments = await sp.web.lists.getByTitle(this.listName)
         .items.getById(id)
         .attachmentFiles();
@@ -412,126 +582,110 @@ export default class ChangeRequestService {
   }
 
   /**
-   * CREATE NEW CHANGE REQUEST - FIXED
-   * Step 1: Create item with basic data
-   * Step 2: Generate Change Request ID
-   * Step 3: Update the item with the generated ID
+   * CREATE NEW CHANGE REQUEST - Based on working IT Equipment pattern
    */
-  public static async createRequest(data: Partial<IChangeRequest>): Promise<number> {
-    let newId = 0;
-    
+  public static async createRequest(formData: any): Promise<number> {
     try {
-      console.log("╔══════════════════════════════════════════════════════════════╗");
-      console.log("║              CREATE REQUEST - START                          ║");
-      console.log("╚══════════════════════════════════════════════════════════════╝");
-      console.log("Data received:", JSON.stringify(data, null, 2));
+      console.log("=== createRequest START ===");
+      console.log("Form data received:", {
+        ...formData,
+        Employee_x0020_Signature: formData.Employee_x0020_Signature ? "Signature present" : "No signature",
+        Attachment: formData.Attachment ? formData.Attachment.name : "No attachment"
+      });
       
       const sp = getSP();
       
-      // ========== STEP 1: Create the item ==========
-      console.log("\n📌 STEP 1: Creating item in SharePoint list...");
-      console.log("List Name:", this.listName);
-      
-      const itemData: any = {
-        Title: data.Title || "Mr",
-        First_x0020_Name: data.First_x0020_Name || "",
-        Staff_x0020_No: data.Staff_x0020_No || "",
-        Department: data.Department || "",
-        System: data.System || "",
-        User_x0020_Requirement: data.User_x0020_Requirement || "",
-        User_x0020_Requirement_x0020_Pri: data.User_x0020_Requirement_x0020_Pri || "Low",
-        User_x0020_Requirements: data.User_x0020_Requirements || "",
-        Date: data.Date || new Date().toISOString(),
+      // STEP 1: Create the item (like working ITEquipment pattern)
+      const item = await sp.web.lists.getByTitle(this.listName).items.add({
+        Title: formData.Title || "Mr",
+        First_x0020_Name: formData.First_x0020_Name || "",
+        Staff_x0020_No: formData.Staff_x0020_No || "",
+        Department: formData.Department || "",
+        System: formData.System || "",
+        User_x0020_Requirement: formData.User_x0020_Requirement || "",
+        User_x0020_Requirement_x0020_Pri: formData.User_x0020_Requirement_x0020_Pri || "Low",
+        User_x0020_Requirements: formData.User_x0020_Requirements || "",
+        Date: formData.Date || new Date().toISOString(),
         Submission_x0020_Date: new Date().toISOString(),
-        Employee_x0020_Signature: data.Employee_x0020_Signature || "",
+        Employee_x0020_Signature: formData.Employee_x0020_Signature || "",
         ApprovalStatus: "Pending with HOD"
+      });
+      
+      // Get the item ID (using item.ID like working pattern)
+      const itemId = item.ID;
+      console.log("✅ Item created with ID:", itemId);
+      
+      // STEP 2: Generate Change Request ID (like working ITEquipment pattern)
+      const today = new Date();
+      
+      const leftPad = (value: number, length: number): string => {
+        let str = value.toString();
+        while (str.length < length) {
+          str = "0" + str;
+        }
+        return str;
       };
       
-      console.log("Item data being sent:", JSON.stringify(itemData, null, 2));
-      
-      // ✅ FIXED: Correct way to get ID from PnPjs response
-      const addResult = await sp.web.lists.getByTitle(this.listName).items.add(itemData);
-      
-      // The ID can be accessed from the result object
-      newId = addResult.id || addResult.data?.Id || addResult.data?.id || 0;
-      
-      if (!newId || newId === 0) {
-        throw new Error("Failed to get ID from create response. Response: " + JSON.stringify(addResult));
-      }
-      
-      console.log("✅ STEP 1 COMPLETE: Item created with ID:", newId);
-      console.log("Full response:", JSON.stringify(addResult, null, 2));
-      
-      // ========== STEP 2: Generate Change Request ID ==========
-      console.log("\n📌 STEP 2: Generating Change Request ID...");
-      
-      const today = new Date();
       const year = today.getFullYear();
-      const month = String(today.getMonth() + 1).padStart(2, "0");
-      const day = String(today.getDate()).padStart(2, "0");
-      const dateStr = `${year}${month}${day}`;
-      const changeRequestId = `${dateStr}-CRQ-${String(newId).padStart(3, "0")}`;
+      const month = leftPad(today.getMonth() + 1, 2);
+      const day = leftPad(today.getDate(), 2);
       
+      const changeRequestId = `${year}${month}${day}-CRQ-${leftPad(itemId, 3)}`;
       console.log("Generated Change Request ID:", changeRequestId);
-      console.log("Internal field name: Change_x0020_Request_x0020_ID");
       
-      // ========== STEP 3: Update item with Change Request ID ==========
-      console.log("\n📌 STEP 3: Updating item with Change Request ID...");
-      
-      await sp.web.lists.getByTitle(this.listName)
-        .items.getById(newId)
+      // STEP 3: Update the item with Change Request ID
+      await sp.web.lists
+        .getByTitle(this.listName)
+        .items.getById(itemId)
         .update({
           Change_x0020_Request_x0020_ID: changeRequestId
         });
       
-      console.log("✅ STEP 3 COMPLETE: Change Request ID updated successfully!");
+      console.log("✅ Change Request ID updated successfully");
       
-      console.log("\n╔══════════════════════════════════════════════════════════════╗");
-      console.log("║              CREATE REQUEST - SUCCESS                        ║");
-      console.log(`║              New Item ID: ${newId}                              ║`);
-      console.log(`║              Change Request ID: ${changeRequestId}            ║`);
-      console.log("╚══════════════════════════════════════════════════════════════╝");
+      // STEP 4: Add attachment if provided (like working ITEquipment pattern)
+      if (formData.Attachment) {
+        console.log("📎 Adding attachment:", formData.Attachment.name);
+        console.log("File size:", formData.Attachment.size, "bytes");
+        
+        const buffer = await formData.Attachment.arrayBuffer();
+        
+        await sp.web.lists
+          .getByTitle(this.listName)
+          .items.getById(itemId)
+          .attachmentFiles.add(formData.Attachment.name, buffer);
+        
+        console.log("✅ Attachment added successfully");
+      }
       
-      return newId;
+      console.log(`🎉 Create request completed! ID: ${itemId}, Change ID: ${changeRequestId}`);
+      return itemId;
       
     } catch (error) {
-      console.error("\n❌ ERROR in createRequest:");
-      console.error("Error details:", error);
-      console.error("New ID created before error:", newId);
+      console.error("❌ Error creating request:", error);
       throw error;
     }
   }
 
   /**
-   * ADD ATTACHMENT TO CHANGE REQUEST
+   * ADD ATTACHMENT (alternative method)
    */
   public static async addAttachment(itemId: number, file: File): Promise<string> {
     try {
-      console.log("\n╔══════════════════════════════════════════════════════════════╗");
-      console.log("║              ADD ATTACHMENT - START                          ║");
-      console.log("╚══════════════════════════════════════════════════════════════╝");
-      console.log("Item ID:", itemId);
-      console.log("File Name:", file.name);
-      console.log("File Size:", file.size, "bytes");
-      console.log("File Type:", file.type);
+      console.log("=== addAttachment START ===", { itemId, fileName: file.name });
       
       const sp = getSP();
+      const buffer = await file.arrayBuffer();
       
-      const result = await sp.web.lists.getByTitle(this.listName)
+      const result = await sp.web.lists
+        .getByTitle(this.listName)
         .items.getById(itemId)
-        .attachmentFiles.add(file.name, file);
+        .attachmentFiles.add(file.name, buffer);
       
-      console.log("✅ Attachment added successfully!");
-      console.log("Attachment name:", result.data?.name || file.name);
-      
-      console.log("\n╔══════════════════════════════════════════════════════════════╗");
-      console.log("║              ADD ATTACHMENT - SUCCESS                         ║");
-      console.log("╚══════════════════════════════════════════════════════════════╝");
-      
+      console.log("✅ Attachment added successfully");
       return result.data?.name || file.name;
     } catch (error) {
-      console.error("\n❌ ERROR in addAttachment:");
-      console.error("Error details:", error);
+      console.error("❌ Error adding attachment:", error);
       return "";
     }
   }
@@ -541,19 +695,14 @@ export default class ChangeRequestService {
    */
   public static async deleteAttachment(itemId: number, fileName: string): Promise<void> {
     try {
-      console.log("=== deleteAttachment START === Item ID:", itemId, "File:", fileName);
-      
       const sp = getSP();
-      
       await sp.web.lists.getByTitle(this.listName)
         .items.getById(itemId)
         .attachmentFiles.getByName(fileName)
         .delete();
-      
       console.log("Attachment deleted:", fileName);
     } catch (error) {
       console.error("Error deleting attachment:", error);
-      throw error;
     }
   }
 
@@ -562,47 +711,13 @@ export default class ChangeRequestService {
    */
   public static async getAttachments(itemId: number): Promise<any[]> {
     try {
-      console.log("=== getAttachments START === Item ID:", itemId);
-      
       const sp = getSP();
-      
-      const attachments = await sp.web.lists.getByTitle(this.listName)
+      return await sp.web.lists.getByTitle(this.listName)
         .items.getById(itemId)
         .attachmentFiles();
-      
-      console.log("Attachments found:", attachments.length);
-      return attachments;
     } catch (error) {
       console.error("Error fetching attachments:", error);
       return [];
-    }
-  }
-
-  /**
-   * UPDATE EXISTING REQUEST
-   */
-  public static async updateRequest(id: number, data: Partial<IChangeRequest>): Promise<void> {
-    try {
-      console.log("=== updateRequest START === ID:", id);
-      
-      const sp = getSP();
-      
-      const updateData: any = {};
-      Object.keys(data).forEach(key => {
-        const value = data[key as keyof IChangeRequest];
-        if (value !== undefined && value !== null) {
-          updateData[key] = value;
-        }
-      });
-      
-      await sp.web.lists.getByTitle(this.listName)
-        .items.getById(id)
-        .update(updateData);
-      
-      console.log("Update successful for ID:", id);
-    } catch (error) {
-      console.error("Error updating request:", error);
-      throw error;
     }
   }
 }

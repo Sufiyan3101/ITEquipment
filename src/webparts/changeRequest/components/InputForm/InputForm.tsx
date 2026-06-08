@@ -304,6 +304,7 @@
 // export default InputForm;
 
 
+
 import * as React from "react";
 import styles from "./InputForm.module.scss";
 import { useNavigate } from "react-router-dom";
@@ -460,7 +461,7 @@ const InputForm = () => {
       const signatureData = canvas.toDataURL("image/png");
       setHasSignature(true);
       handleChange("Employee_x0020_Signature", signatureData);
-      console.log("Signature saved, length:", signatureData.length);
+      console.log("Signature saved");
     }
   };
 
@@ -521,6 +522,7 @@ const InputForm = () => {
     try {
       const systemsString = selectedSystems.join(", ");
       
+      // IMPORTANT: Include the attachment file in submitData
       const submitData = {
         Title: formData.Title,
         First_x0020_Name: formData.First_x0020_Name,
@@ -531,27 +533,19 @@ const InputForm = () => {
         User_x0020_Requirement_x0020_Pri: formData.User_x0020_Requirement_x0020_Pri,
         User_x0020_Requirements: formData.User_x0020_Requirements,
         Date: formData.Date,
-        Employee_x0020_Signature: formData.Employee_x0020_Signature
+        Employee_x0020_Signature: formData.Employee_x0020_Signature,
+        Attachment: selectedFile  // ✅ This is critical - includes the file
       };
       
-      console.log("Submitting data:", submitData);
+      console.log("Submitting data:", {
+        ...submitData,
+        Employee_x0020_Signature: submitData.Employee_x0020_Signature ? "Present" : "Missing",
+        Attachment: submitData.Attachment ? submitData.Attachment.name : "None"
+      });
       
-      // STEP 1: Create the change request
+      // Create the change request (attachment handled inside service)
       const newId = await ChangeRequestService.createRequest(submitData);
       console.log("✅ Request created with ID:", newId);
-      
-      // STEP 2: Add attachment if selected
-      if (selectedFile) {
-        console.log("📎 Adding attachment...");
-        const attachmentResult = await ChangeRequestService.addAttachment(newId, selectedFile);
-        if (attachmentResult) {
-          console.log("✅ Attachment added successfully:", attachmentResult);
-        } else {
-          console.warn("⚠️ Attachment may not have been added");
-        }
-      } else {
-        console.log("No attachment to add");
-      }
       
       alert(`Change Request submitted successfully!\nID: ${newId}`);
       navigate("/");
