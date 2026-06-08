@@ -1,12 +1,12 @@
 
 require("./LeftNav.module.css");
 const styles = {
-  sidebar: 'sidebar_c5c01650',
-  logoSection: 'logoSection_c5c01650',
-  navItem: 'navItem_c5c01650',
-  subMenu: 'subMenu_c5c01650',
-  subMenuItem: 'subMenuItem_c5c01650',
-  sidebarOpen: 'sidebarOpen_c5c01650'
+  sidebar: 'sidebar_e0d75c0d',
+  logoSection: 'logoSection_e0d75c0d',
+  navItem: 'navItem_e0d75c0d',
+  subMenu: 'subMenu_e0d75c0d',
+  subMenuItem: 'subMenuItem_e0d75c0d',
+  sidebarOpen: 'sidebarOpen_e0d75c0d'
 };
 
 export default styles;

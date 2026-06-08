@@ -20,6 +20,7 @@
 .navItem {
   padding: 16px;
   cursor: pointer;
+  justify-content: space-between;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 
   &:hover {

@@ -1,0 +1,226 @@
+.container {
+  max-width: 100%;
+  margin: 20px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.section {
+  border: 1px solid #c8d0d9;
+  border-radius: 4px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+
+.sectionTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: #005ea6;
+  margin: 0 0 16px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+// User Information grid - 3 columns on desktop
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px 20px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// User Request - 2 columns
+.requestGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.leftCol,
+.rightCol {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  label {
+    font-weight: 500;
+    color: #333;
+    font-size: 13px;
+  }
+}
+
+.input {
+  height: 32px;
+  padding: 0 8px;
+  border: 1px solid #a0aab4;
+  border-radius: 3px;
+  font-size: 13px;
+  width: 100%;
+  box-sizing: border-box;
+  background: #fff;
+
+  &:focus {
+    outline: none;
+    border-color: #005ea6;
+    box-shadow: 0 0 0 2px rgba(0, 94, 166, 0.15);
+  }
+}
+
+.readOnly {
+  background-color: #f5f5f5;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.textarea {
+  padding: 8px;
+  border: 1px solid #a0aab4;
+  border-radius: 3px;
+  font-size: 13px;
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  font-family: Arial, sans-serif;
+
+  &:focus {
+    outline: none;
+    border-color: #005ea6;
+    box-shadow: 0 0 0 2px rgba(0, 94, 166, 0.15);
+  }
+}
+
+// Signature
+.signatureWrapper {
+  border: 1px solid #a0aab4;
+  border-radius: 3px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.signatureCanvas {
+  width: 100% !important;
+  height: 150px !important;
+  display: block;
+}
+
+.signatureActions {
+  display: flex;
+  gap: 6px;
+  padding: 6px 8px;
+  background: #f5f5f5;
+  border-top: 1px solid #e0e0e0;
+}
+
+.clearBtn {
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 3px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  color: #555;
+
+  &:hover {
+    background: #e0e0e0;
+  }
+}
+
+// Attachment
+.attachBox {
+  border: 1px solid #a0aab4;
+  border-radius: 3px;
+  padding: 10px 12px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 80px;
+}
+
+.noAttach {
+  color: #999;
+  font-size: 13px;
+}
+
+.fileName {
+  color: #005ea6;
+  font-size: 13px;
+  word-break: break-all;
+}
+
+.attachLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #005ea6;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 500;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.fileInput {
+  display: none; // hidden, triggered by label
+}
+
+// Errors
+.errorInput {
+  border-color: #d32f2f !important;
+}
+
+.errorBorder {
+  border-color: #d32f2f !important;
+}
+
+.errorText {
+  color: #d32f2f;
+  font-size: 12px;
+}
+
+// Action bar
+.actionBar {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
+
+.submitBtn {
+  background-color: #005ea6;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 30px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 600;
+
+  &:hover:not(:disabled) {
+    background-color: #004a8f;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}

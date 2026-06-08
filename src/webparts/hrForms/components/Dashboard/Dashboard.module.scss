@@ -26,16 +26,6 @@
   text-align: center;
 }
 
-.logo {
-  position: absolute;
-  right: 15px;
-
-  img {
-    height: clamp(30px, 5vw, 50px);
-    width: auto;
-  }
-}
-
 
 .toolbar {
   display: flex;
@@ -102,18 +92,13 @@
   }
 }
 
-// In your .module.scss
 .tableRow {
   &:nth-child(odd) {
-    background-color: #ffffff; // white
+    background-color: #ffffff; 
   }
 
   &:nth-child(even) {
-    background-color: #DBDBDB; // light gray
-  }
-
-  &:hover {
-    background-color: #e8f0fe; // optional hover effect
+    background-color: #DBDBDB; 
   }
 }
 
@@ -144,7 +129,6 @@
     cursor: not-allowed;
   }
 
-  // ✅ Override hover for active page inside pageBtn itself
   &.activePage {
     background-color: #005ea6;
     color: #ffffff;
@@ -152,7 +136,7 @@
     font-weight: bold;
 
     &:hover {
-      background-color: #004a8f; // ✅ darker blue on hover
+      background-color: #004a8f;
     }
   }
 }

@@ -1,5 +1,6 @@
 import { getSP } from "./spConfig";
 import { IITEquipment } from "../models/IITEquipments";
+import { IFormData } from "../models/IFormData";
 
 export default class ITEquipmentService {
   public static async getITEquipmentData(): Promise<IITEquipment[]> {
@@ -63,23 +64,83 @@ export default class ITEquipmentService {
           "ITStaffApprovarName/Title",
           "ITStaffApprovarName/EMail",
           "ITStaffDate",
-          "ITStaffComment"
-        ).expand("HODApprovarName", "HODITApprovarName", "StaffMembers", "ITStaffApprovarName")();
+          "ITStaffComment",
+        )
+        .expand(
+          "HODApprovarName",
+          "HODITApprovarName",
+          "StaffMembers",
+          "ITStaffApprovarName",
+        )();
 
-        const attachments = await getSP().web.lists
-      .getByTitle("ITEquipmentRequest")
-      .items.getById(id)
-      .attachmentFiles();
+      const attachments = await getSP()
+        .web.lists.getByTitle("ITEquipmentRequest")
+        .items.getById(id)
+        .attachmentFiles();
 
-    console.log("Attachments fetched:", attachments);
-    console.log("Attachments count:", attachments?.length);
+      console.log("Attachments fetched:", attachments);
+      console.log("Attachments count:", attachments?.length);
 
-    return { ...item, Attachments: attachments } as IITEquipment;
-
+      return { ...item, Attachments: attachments } as IITEquipment;
     } catch (error) {
       console.error(error);
 
       return null;
+    }
+  }
+
+  public static async createITEquipment(formData: IFormData): Promise<void> {
+    const sp = getSP();
+
+    const item = await sp.web.lists.getByTitle("ITEquipmentRequest").items.add({
+      Title: formData.Title,
+      FirstName: formData.FirstName,
+      StaffNo: formData.StaffNo,
+      Department: formData.Department,
+      Date: formData.Date,
+      RequestType: formData.RequestType,
+      Reason: formData.Reason,
+      EmployeeSignature: JSON.stringify(formData.EmployeeSignature),
+    });
+
+    const itemId = item.ID;
+
+    const today = new Date();
+
+    const leftPad = (value: number, length: number): string => {
+      let str = value.toString();
+
+      while (str.length < length) {
+        str = "0" + str;
+      }
+
+      return str;
+    };
+
+    const year = today.getFullYear();
+    const month = leftPad(today.getMonth() + 1, 2);
+    const day = leftPad(today.getDate(), 2);
+
+    const RequestID = `${year}${month}${day}-ITE-${leftPad(itemId, 3)}`;
+
+    await sp.web.lists
+      .getByTitle("ITEquipmentRequest")
+      .items.getById(itemId)
+      .update({
+        ITEquipmentRequestID: RequestID,
+      });
+
+    if (formData.Attachment) {
+
+      console.log("File Name:", formData.Attachment.name);
+  console.log("File Size:", formData.Attachment.size);
+
+      const buffer = await formData.Attachment.arrayBuffer();
+
+      await sp.web.lists
+        .getByTitle("ITEquipmentRequest")
+        .items.getById(itemId)
+        .attachmentFiles.add(formData.Attachment.name, buffer);
     }
   }
 }

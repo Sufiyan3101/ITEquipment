@@ -49,7 +49,7 @@ const Dashboard = () => {
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const paginatedItems = filteredITEquipments.slice(startIndex, endIndex);
 
-  // Generate page numbers to display (like screenshot: 1 2 3 4 ... >>)
+  // Generate page numbers
   const getPageNumbers = (): (number | string)[] => {
     const pages: (number | string)[] = [];
 
@@ -73,9 +73,6 @@ const Dashboard = () => {
 
       <div className={styles.header}>
         <div className={styles.title}>IT EQUIPMENT DASHBOARD</div>
-        <div className={styles.logo}>
-          <img src={require("../assests/AlubafHeaderLogo.png")} alt="logo" />
-        </div>
       </div>
 
       <div className={styles.toolbar}>
