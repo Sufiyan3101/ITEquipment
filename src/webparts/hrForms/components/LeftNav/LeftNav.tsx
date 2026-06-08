@@ -10,18 +10,17 @@ interface ILeftNavProps {
 
 
 const LeftNav = ({ isOpen, onClose }: ILeftNavProps) => {
-  const [openMenu, setOpenMenu] = React.useState<string | null>("Memo");
+  const [openMenu, setOpenMenu] = React.useState<string | null>("Add");
 
   const navigate = useNavigate();
 
   const toggleMenu = (menu: string) => {
     setOpenMenu(openMenu === menu ? null : menu);
   };
-  
+
 
   return (
-    <div className={`${styles.sidebar} ${
-        isOpen ? styles.sidebarOpen : ""
+    <div className={`${styles.sidebar} ${isOpen ? styles.sidebarOpen : ""
       }`}>
 
       <div className={styles.logoSection}>
@@ -34,25 +33,25 @@ const LeftNav = ({ isOpen, onClose }: ILeftNavProps) => {
 
       <div
         className={styles.navItem}
-        onClick={() => toggleMenu("Memo")}
+        onClick={() => toggleMenu("Add")}
       >
         <span>Memo</span>
 
-        {openMenu === "Memo" ? (
+        {openMenu === "Add" ? (
           <ChevronDown12Regular />
         ) : (
           <ChevronRight12Regular />
         )}
       </div>
 
-      {openMenu === "Memo" && (
+      {openMenu === "Add" && (
         <div className={styles.subMenu}>
-          <div className={styles.subMenuItem} onClick={()=> navigate('/')}>
+          <div className={styles.subMenuItem} onClick={() => navigate('/')}>
             Dashboard
           </div>
 
-          <div className={styles.subMenuItem}>
-            Create Request
+          <div className={styles.subMenuItem} onClick={() => navigate('/task-dashboard')}>
+            Task Dashboard
           </div>
         </div>
       )}

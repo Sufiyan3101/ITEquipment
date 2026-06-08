@@ -30,3 +30,17 @@ export interface IPerson {
   Title: string;
   EMail: string;
 }
+
+export interface IITEquipmentTask {
+  ID: number;
+  ITEquipmentRequestID: string;
+  Title: string;
+  FirstName : string;
+  StaffNo: string;
+  Department: string;
+  Date: Date;
+  RequestType: string;
+  ApprovalStatus: string;
+  Reason: string;
+  RoleLevel: string;
+}

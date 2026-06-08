@@ -4,6 +4,7 @@ import MainLayout from "./layout/MainLayout";
 import Dashboard from "./Dashboard/Dashboard";
 import InputForm from "./InputForm/InputForm";
 import ViewForm from "./ViewForm/ViewForm";
+import TaskDashboard from "./TaskDashboard/TaskDashboard";
 
 import { HashRouter, Routes, Route } from "react-router-dom";
 
@@ -16,6 +17,7 @@ const HRForm = () => {
           <Route path="/" element={<Dashboard />} />
           <Route path="/create-request" element={<InputForm />} />
           <Route path="/view-form/:id" element={<ViewForm />} />
+          <Route path="/task-dashboard" element={<TaskDashboard />} />
         </Routes>
       </MainLayout>
     </HashRouter>
