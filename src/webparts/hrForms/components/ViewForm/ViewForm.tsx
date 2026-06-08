@@ -51,106 +51,118 @@ const ViewForm = () => {
 
     // Add print function
     const handlePrint = async (): Promise<void> => {
-  if (!formRef.current) return;
+        if (!formRef.current) return;
 
-  try {
-    // ✅ Hide via ref
-    if (actionBarRef.current) actionBarRef.current.style.display = "none";
+        try {
+            // ✅ Hide via ref
+            if (actionBarRef.current) actionBarRef.current.style.display = "none";
 
-    const canvas = await html2canvas(formRef.current, {
-      scale: 2,
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor: "#ffffff",
-      logging: false,
-    });
+            const canvas = await html2canvas(formRef.current, {
+                scale: 2,
+                useCORS: true,
+                allowTaint: true,
+                backgroundColor: "#ffffff",
+                logging: false,
+            });
 
-    // ✅ Restore via ref
-    if (actionBarRef.current) actionBarRef.current.style.display = "";
+            // ✅ Restore via ref
+            if (actionBarRef.current) actionBarRef.current.style.display = "";
 
-    const imgData = canvas.toDataURL("image/png");
-    const pdf = new jsPDF({
-      orientation: "portrait",
-      unit: "mm",
-      format: "a4",
-    });
+            const imgData = canvas.toDataURL("image/png");
+            const pdf = new jsPDF({
+                orientation: "portrait",
+                unit: "mm",
+                format: "a4",
+            });
 
-    const pageWidth = pdf.internal.pageSize.getWidth();
-    const pageHeight = pdf.internal.pageSize.getHeight();
-    const imgWidth = pageWidth;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
+            const imgWidth = pageWidth;
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-    let heightLeft = imgHeight;
-    let position = 0;
+            let heightLeft = imgHeight;
+            let position = 0;
 
-    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-    heightLeft -= pageHeight;
+            pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
 
-    while (heightLeft > 0) {
-      position = heightLeft - imgHeight;
-      pdf.addPage();
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-    }
+            while (heightLeft > 0) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
 
-    pdf.save(`ITEquipmentRequest_${data?.ITEquipmentRequestID || data?.ID}.pdf`);
+            pdf.save(`ITEquipmentRequest_${data?.ITEquipmentRequestID || data?.ID}.pdf`);
 
-  } catch (error) {
-    if (actionBarRef.current) actionBarRef.current.style.display = "";
-    console.error("Error generating PDF:", error);
-  }
-};
+        } catch (error) {
+            if (actionBarRef.current) actionBarRef.current.style.display = "";
+            console.error("Error generating PDF:", error);
+        }
+    };
 
     return (
         <div className={styles.container} ref={formRef}>
-            <div className={styles.firstSection}>
+
+            {/* Section 1 */}
+            <div className={styles.section}>
                 <h2>Employee Information</h2>
+                <hr className={styles.divider} />
 
                 <div className={styles.grid}>
                     <div className={styles.field}>
-                        <label>Title : </label>
+                        <label>Title :</label>
                         <span>{data?.Title || "N/A"}</span>
                     </div>
 
                     <div className={styles.field}>
-                        <label>Employee Name : </label>
+                        <label>Employee Name :</label>
                         <span>{data?.FirstName || "N/A"}</span>
                     </div>
 
                     <div className={styles.field}>
-                        <label>Staff No : </label>
+                        <label>Staff No :</label>
                         <span>{data?.StaffNo || "N/A"}</span>
                     </div>
 
                     <div className={styles.field}>
-                        <label>Department : </label>
+                        <label>Department :</label>
                         <span>{data?.Department || "N/A"}</span>
                     </div>
 
                     <div className={styles.field}>
-                        <label>Date : </label>
+                        <label>Date :</label>
                         <span>{data?.Date || "N/A"}</span>
                     </div>
+                </div>
+            </div>
 
+            {/* Section 2 */}
+            <div className={styles.section}>
+                <h2>Request Details</h2>
+                <hr className={styles.divider} />
+
+                <div className={styles.grid}>
                     <div className={styles.field}>
-                        <label>Status : </label>
+                        <label>Status :</label>
                         <span>{data?.ApprovalStatus || "N/A"}</span>
                     </div>
 
                     <div className={styles.field}>
-                        <label>Request Type : </label>
+                        <label>Request Type :</label>
                         <span>{data?.RequestType || "N/A"}</span>
                     </div>
 
                     <div className={styles.field}>
-                        <label>Reason : </label>
+                        <label>Reason :</label>
                         <span>{data?.Reason || "N/A"}</span>
                     </div>
 
                     <div className={styles.field}>
-                        <label>Attachments : </label>
+                        <label>Attachments :</label>
+
                         <div>
-                            {data?.Attachments && data.Attachments.length > 0 ? (
+                            {data?.Attachments?.length > 0 ? (
                                 <ul className={styles.attachmentList}>
                                     {data.Attachments.map((file) => (
                                         <li key={file.FileName}>
@@ -171,7 +183,8 @@ const ViewForm = () => {
                     </div>
 
                     <div className={styles.field}>
-                        <label>Signature : </label>
+                        <label>Signature :</label>
+
                         <img
                             className={styles.sigImage}
                             src={data?.EmployeeSignature?.replace(/^"|"$/g, "").trim()}
@@ -181,47 +194,93 @@ const ViewForm = () => {
                 </div>
             </div>
 
+            {/* Section 3 */}
             <div className={styles.section}>
-                <h2>Approved By Head of Department</h2>
-                <div className={styles.grid}>
-                    <div className={styles.field}>
-                        <label>Name : </label>
-                        <span>{data.HODApprovarName?.Title || "N/A"}</span>
-                    </div>
-                    <div className={styles.field}>
-                        <label>Date : </label>
-                        <span>{data.HODDate || "N/A"}</span>
-                    </div>
+    <h2>Approved By</h2>
+    <hr className={styles.divider} />
+
+    {/* HOD */}
+    <div className={styles.approvalBlock}>
+        <h3>Head of Department</h3>
+
+        <div className={styles.approvalContent}>
+            <div className={styles.approvalLeft}>
+                <div className={styles.infoRow}>
+                    <label>Name :</label>
+                    <span>{data?.HODApprovarName?.Title || "N/A"}</span>
+                </div>
+
+                <div className={styles.infoRow}>
+                    <label>Comment :</label>
+                    <span>{data?.HODComment || "N/A"}</span>
                 </div>
             </div>
 
-            <div className={styles.section}>
-                <h2>Approved By Head of IT Department</h2>
-                <div className={styles.grid}>
-                    <div className={styles.field}>
-                        <label>Name : </label>
-                        <span>{data.HODITApprovarName?.Title || "N/A"}</span>
-                    </div>
-                    <div className={styles.field}>
-                        <label>Date : </label>
-                        <span>{data.HODITDate || "N/A"}</span>
-                    </div>
+            <div className={styles.approvalRight}>
+                <div className={styles.infoRow}>
+                    <label>Date :</label>
+                    <span>{data?.HODDate || "N/A"}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr className={styles.rowDivider} />
+
+    {/* Head of IT */}
+    <div className={styles.approvalBlock}>
+        <h3>Head of IT Department</h3>
+
+        <div className={styles.approvalContent}>
+            <div className={styles.approvalLeft}>
+                <div className={styles.infoRow}>
+                    <label>Name :</label>
+                    <span>{data?.HODITApprovarName?.Title || "N/A"}</span>
+                </div>
+
+                <div className={styles.infoRow}>
+                    <label>Comment :</label>
+                    <span>{data?.HODITComment || "N/A"}</span>
                 </div>
             </div>
 
-            <div className={styles.section}>
-                <h2>Approved By IT Staff Member</h2>
-                <div className={styles.grid}>
-                    <div className={styles.field}>
-                        <label>Name : </label>
-                        <span>{data.ITStaffApprovarName?.Title || "N/A"}</span>
-                    </div>
-                    <div className={styles.field}>
-                        <label>Date : </label>
-                        <span>{data.ITStaffDate || "N/A"}</span>
-                    </div>
+            <div className={styles.approvalRight}>
+                <div className={styles.infoRow}>
+                    <label>Date :</label>
+                    <span>{data?.HODITDate || "N/A"}</span>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <hr className={styles.rowDivider} />
+
+    {/* IT Staff */}
+    <div className={styles.approvalBlock}>
+        <h3>IT Staff</h3>
+
+        <div className={styles.approvalContent}>
+            <div className={styles.approvalLeft}>
+                <div className={styles.infoRow}>
+                    <label>Name :</label>
+                    <span>{data?.ITStaffApprovarName?.Title || "N/A"}</span>
+                </div>
+
+                <div className={styles.infoRow}>
+                    <label>Comment :</label>
+                    <span>{data?.ITStaffComment || "N/A"}</span>
+                </div>
+            </div>
+
+            <div className={styles.approvalRight}>
+                <div className={styles.infoRow}>
+                    <label>Date :</label>
+                    <span>{data?.ITStaffDate || "N/A"}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
             <div className={styles.actionBar} ref={actionBarRef}>
                 <button
@@ -231,6 +290,7 @@ const ViewForm = () => {
                     🖨️ Download PDF
                 </button>
             </div>
+
         </div>
     )
 }
