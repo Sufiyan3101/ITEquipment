@@ -1,0 +1,32 @@
+declare const styles: {
+  readonly container: string;
+  readonly loading: string;
+  readonly notFound: string;
+  readonly formCard: string;
+  readonly formTitle: string;
+  readonly section: string;
+  readonly grid: string;
+  readonly field: string;
+  readonly fieldFull: string;
+  readonly statusValue: string;
+  readonly signature: string;
+  readonly approvalSection: string;
+  readonly formGroup: string;
+  readonly required: string;
+  readonly textarea: string;
+  readonly input: string;
+  readonly searching: string;
+  readonly searchResults: string;
+  readonly searchResultItem: string;
+  readonly selected: string;
+  readonly staffName: string;
+  readonly staffEmail: string;
+  readonly infoBox: string;
+  readonly actionButtons: string;
+  readonly approveBtn: string;
+  readonly rejectBtn: string;
+  readonly submitBtn: string;
+  readonly closeBtn: string;
+};
+
+export = styles;

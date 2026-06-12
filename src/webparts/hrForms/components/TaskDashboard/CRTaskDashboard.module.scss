@@ -1,0 +1,460 @@
+.dashboard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.header {
+  min-height: 60px;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: 8px;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 15px;
+}
+
+.title {
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  font-weight: 700;
+  color: #004f88;
+  text-align: center;
+}
+
+.logo {
+  position: absolute;
+  right: 15px;
+  img {
+    height: clamp(30px, 5vw, 50px);
+    width: auto;
+  }
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.searchBox {
+  flex: 1;
+  min-width: 200px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.refreshBtn {
+  background-color: #005ea6;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: #00457a;
+  }
+}
+
+.tableWrapper {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  overflow: auto;
+  border-radius: 8px;
+}
+
+.table {
+  width: 100%;
+  min-width: 1000px;
+  border-collapse: collapse;
+  background: white;
+  
+  th {
+    position: sticky;
+    top: 0;
+    background: #f8f9fa;
+    padding: 12px;
+    text-align: center;
+    border-bottom: 2px solid #ddd;
+    font-weight: 600;
+  }
+  
+  td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+  }
+}
+
+.requirementCell {
+  text-align: left;
+  max-width: 200px;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.noData {
+  text-align: center;
+  padding: 40px !important;
+  color: #999;
+}
+
+.priorityBadge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.priorityHigh {
+  background: #d13438;
+  color: white;
+}
+
+.priorityMedium {
+  background: #ffaa44;
+  color: #333;
+}
+
+.priorityLow {
+  background: #6bb700;
+  color: white;
+}
+
+.statusPending {
+  background: #ffaa44;
+  color: #333;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.roleBadge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.roleHOD {
+  background: #005ea6;
+  color: white;
+}
+
+.roleHODIT {
+  background: #6c757d;
+  color: white;
+}
+
+.roleITStaff {
+  background: #107c10;
+  color: white;
+}
+
+.roleDefault {
+  background: #6c757d;
+  color: white;
+}
+
+.actionBtn {
+  background: #005ea6;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  &:hover {
+    background: #00457a;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard { padding: 8px; }
+  .header { min-height: 50px; }
+  .toolbar { flex-direction: column; align-items: stretch; }
+  .refreshBtn { width: 100%; }
+  .searchBox { width: 100%; }
+  .table { font-size: 13px; }
+  .table th, .table td { padding: 8px; }
+}
+
+
+.dashboard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.header {
+  min-height: 60px;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: 8px;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 15px;
+}
+
+.title {
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  font-weight: 700;
+  color: #004f88;
+  text-align: center;
+}
+
+.logo {
+  position: absolute;
+  right: 15px;
+  img {
+    height: clamp(30px, 5vw, 50px);
+    width: auto;
+  }
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.searchBox {
+  flex: 1;
+  min-width: 200px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.refreshBtn {
+  background-color: #005ea6;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  &:hover {
+    background-color: #00457a;
+  }
+}
+
+.tableWrapper {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  overflow: auto;
+  border-radius: 8px;
+}
+
+.table {
+  width: 100%;
+  min-width: 1000px;
+  border-collapse: collapse;
+  background: white;
+  
+  th {
+    position: sticky;
+    top: 0;
+    background: #f8f9fa;
+    padding: 12px;
+    text-align: center;
+    border-bottom: 2px solid #ddd;
+    font-weight: 600;
+  }
+  
+  td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+  }
+}
+
+.tableRow {
+  &:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+.requirementCell {
+  text-align: left;
+  max-width: 200px;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.noData {
+  text-align: center;
+  padding: 40px !important;
+  color: #999;
+}
+
+.priorityBadge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.priorityHigh {
+  background: #d13438;
+  color: white;
+}
+
+.priorityMedium {
+  background: #ffaa44;
+  color: #333;
+}
+
+.priorityLow {
+  background: #6bb700;
+  color: white;
+}
+
+.statusPending {
+  background: #ffaa44;
+  color: #333;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.roleBadge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.roleHOD {
+  background: #005ea6;
+  color: white;
+}
+
+.roleHODIT {
+  background: #6c757d;
+  color: white;
+}
+
+.roleITStaff {
+  background: #107c10;
+  color: white;
+}
+
+.roleDefault {
+  background: #6c757d;
+  color: white;
+}
+
+.actionBtn {
+  background: #005ea6;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  &:hover {
+    background: #00457a;
+  }
+}
+
+/* Pagination Styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 10px;
+  flex-wrap: wrap;
+}
+
+.pageBtn {
+  background-color: white;
+  border: 1px solid #ddd;
+  color: #333;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background-color: #005ea6;
+    border-color: #005ea6;
+    color: white;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.activePage {
+  background-color: #005ea6;
+  border-color: #005ea6;
+  color: white;
+}
+
+.ellipsis {
+  padding: 6px 8px;
+  color: #666;
+}
+
+.pageInfo {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .dashboard { padding: 8px; }
+  .header { min-height: 50px; }
+  .toolbar { flex-direction: column; align-items: stretch; }
+  .refreshBtn { width: 100%; }
+  .searchBox { width: 100%; }
+  .table { font-size: 13px; }
+  .table th, .table td { padding: 8px; }
+  
+  .pagination {
+    gap: 4px;
+  }
+  
+  .pageBtn {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+  
+  .ellipsis {
+    padding: 4px 6px;
+  }
+  
+  .pageInfo {
+    font-size: 12px;
+  }
+}
