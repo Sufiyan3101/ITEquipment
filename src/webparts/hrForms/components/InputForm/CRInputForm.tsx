@@ -437,7 +437,6 @@
 // export default CRInputForm;
 
 
-
 import * as React from "react";
 import { useRef, useState, useEffect } from "react";
 import styles from "./CRInputForm.module.scss";
@@ -466,7 +465,9 @@ interface IFormErrors {
   Department?: string;
   System?: string;
   User_x0020_Requirement?: string;
+  User_x0020_Requirements?: string;
   Employee_x0020_Signature?: string;
+  Attachment?: string;
 }
 
 const CRInputForm = () => {
@@ -508,8 +509,7 @@ const CRInputForm = () => {
   const userRequirementOptions = [
     "NEW DEVELOPMENT",
     "MODIFYING THE EXISTING DEVELOPMENT",
-    "OTHERS",
-    
+    "OTHERS"
   ];
 
   // Close dropdown when clicking outside
@@ -552,6 +552,10 @@ const CRInputForm = () => {
     const file = e.target.files?.[0] || null;
     setSelectedFile(file);
     handleChange("Attachment", file);
+    // Clear attachment error
+    if (errors.Attachment) {
+      setErrors(prev => ({ ...prev, Attachment: undefined }));
+    }
   };
 
   // ========== SIGNATURE PAD FUNCTIONS ==========
@@ -561,7 +565,7 @@ const CRInputForm = () => {
     if (!canvas) return;
     
     canvas.width = 500;
-    canvas.height = 120;
+    canvas.height = 150;
     
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
@@ -677,23 +681,44 @@ const CRInputForm = () => {
   const validate = (): boolean => {
     const newErrors: IFormErrors = {};
 
+    // Employee Name validation
     if (!formData.First_x0020_Name.trim()) {
       newErrors.First_x0020_Name = "Employee Name is required.";
     }
+    
+    // Staff No validation
     if (!formData.Staff_x0020_No.trim()) {
       newErrors.Staff_x0020_No = "Staff No is required.";
     }
+    
+    // Department validation
     if (!formData.Department.trim()) {
       newErrors.Department = "Department is required.";
     }
+    
+    // System validation
     if (selectedSystems.length === 0) {
       newErrors.System = "System is required.";
     }
+    
+    // User Requirement validation
     if (!formData.User_x0020_Requirement) {
       newErrors.User_x0020_Requirement = "User Requirement is required.";
     }
+    
+    // Comments validation (NEW - REQUIRED)
+    if (!formData.User_x0020_Requirements.trim()) {
+      newErrors.User_x0020_Requirements = "Comments are required.";
+    }
+    
+    // Signature validation
     if (isSignatureEmpty()) {
       newErrors.Employee_x0020_Signature = "Signature is required.";
+    }
+    
+    // Attachment validation (NEW - REQUIRED)
+    if (!selectedFile) {
+      newErrors.Attachment = "Attachment is required.";
     }
 
     setErrors(newErrors);
@@ -834,7 +859,7 @@ const CRInputForm = () => {
               <div className={styles.dropdownHeader} onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
                 <div className={styles.selectedItems}>
                   {selectedSystems.length === 0 ? (
-                    <span className={styles.placeholder}>Select your system type...</span>
+                    <span className={styles.placeholder}>Select your system</span>
                   ) : (
                     selectedSystems.map(system => (
                       <span key={system} className={styles.selectedTag}>
@@ -918,10 +943,13 @@ const CRInputForm = () => {
           <textarea
             value={formData.User_x0020_Requirements}
             onChange={(e) => handleChange("User_x0020_Requirements", e.target.value)}
-            className={styles.textarea}
+            className={`${styles.textarea} ${errors.User_x0020_Requirements ? styles.errorInput : ""}`}
             rows={3}
             placeholder="Enter your comments based on your above selection..."
           />
+          {errors.User_x0020_Requirements && (
+            <span className={styles.errorText}>{errors.User_x0020_Requirements}</span>
+          )}
         </div>
 
         {/* Signature & Attachment - Same Row */}
@@ -934,7 +962,7 @@ const CRInputForm = () => {
                 ref={canvasRef}
                 className={styles.signatureCanvas}
                 width={500}
-                height={120}
+                height={150}
                 onMouseDown={startDrawing}
                 onMouseMove={draw}
                 onMouseUp={stopDrawing}
@@ -957,7 +985,7 @@ const CRInputForm = () => {
           {/* Attachment Column */}
           <div className={styles.attachmentColumn}>
             <label>Attach :</label>
-            <div className={styles.attachBox}>
+            <div className={`${styles.attachBox} ${errors.Attachment ? styles.errorBorder : ""}`}>
               {selectedFile ? (
                 <div className={styles.fileInfo}>
                   <span className={styles.fileName}>
@@ -991,6 +1019,9 @@ const CRInputForm = () => {
                 </>
               )}
             </div>
+            {errors.Attachment && (
+              <span className={styles.errorText}>{errors.Attachment}</span>
+            )}
           </div>
         </div>
       </div>
